@@ -10,7 +10,7 @@ const userController = {
     },
     // get all users
     getAllUsers(req, res) {
-        Users.find({})
+        User.find({})
         // populate users thoughts and friends
         .populate({
             path: "thoughts", select: "-__v"
@@ -51,28 +51,41 @@ const userController = {
                 res.status(404).json({message: "There is no User with this ID!"});
                 return;
             }
-            res.json(dbUserData)
+            res.json(dbUserData);
         })
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err)
-        }
+        .catch(err => res.status(400).json(err));
     },
 
-    // delete a current friend
-    deleteFriend({params}, res) {
-        User.findOneAndUpdate({_id: params.userId}, {$pull: {friends: {id: params.friends}}}, {new: true, runValidators: true})
+    // add a current friend
+    addFriend({params}, res) {
+        User.findOneAndUpdate({_id: params.userId}, {$push: {friends: params.friendId}}, {new: true, runValidators: true})
         .then(dbUserData => {
             if(!dbUserData) {
-                res.status(404).json({message: "There is no User with this ID!"});
+                res.status(404).json({message: "There is no user with this id!"});
                 return;
             }
-            res.json(dbUserData)
+            res.json(dbUserData);
         })
         .catch(err => {
             console.log(err);
             res.status(400).json(err);
-        }
+        })
+    },
+
+    // delete a current friend
+    deleteFriend({params}, res) {
+        User.findOneAndUpdate({_id: params.userId}, {$pull: {friends: {id: params.friendId}}}, {new: true, runValidators: true})
+        .then(dbUserData => {
+            if(!dbUserData){
+                res.status(404).json({message:"There is no User with this Id!"});
+                return;
+            }
+            res.json(dbUserData);
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        })
     }
 };
 
