@@ -1,29 +1,42 @@
 // create user model with schema
 const { Schema, model } = require('mongoose');
+const { User } = require('.');
 
 const UserSchema = new Schema(
     {
         username: {
-            type: DataTypes.STRING,
+            type: String,
             unique: true,
             required: true,
             trimmed: true
             
         },
         email: {
-            type: DataTypes.STRING,
+            type: String,
             required: true,
             unique: true,
-            match:
+            match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/] // regex for validation email
         },
-        thoughts: {
-            array of _id values referencing the thought model
+        //  array of _id values referencing the thought model
+        thoughts: [{
+            type: Schema.Types.ObjectId,
+            ref: "Thoughts"
+        }],
+        // array of _id values referencing the User model (self-reference)
+        friends: [{
+            type: Schema.Types.ObjectId,
+            ref: "Users"
+        }]
+    },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
         },
-        friends: {
-            array of _id values referencing the User model (self-reference)
-        }
+        id: false
     }
 )
 
 // schema settings
-// create a virtual called friendCount that retrieves the length of the user's friends array field of query
+// create a virtual called friendCount that retrieves the length of the user's friends array field of query (total count of friends)
+UserSchema.virtual()
