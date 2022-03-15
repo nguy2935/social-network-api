@@ -1,9 +1,19 @@
-# User Story
+# Social Network Api
+
+## Table of Contents
+* [Description](#description)
+* [Walkthrough Video](#walkthrough)
+* [User Story](#user-story)
+* [Acceptance Criteria](#acceptance-criteria)
+
+## Description
+* This application allows the user to create and manage their thoughts and reactions. Ability to add and delete friends as well.
+## User Story
 * AS A social media startup
 * I WANT an API for my social network that uses a NoSQL database
 * SO THAT my website can handle large amounts of unstructured data
 
-# Acceptance Criteria
+## Acceptance Criteria
 * GIVEN a social network API
 * WHEN I enter the command to invoke the application
 * THEN my server is started and the Mongoose models are synced to the MongoDB database
