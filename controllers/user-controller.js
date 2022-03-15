@@ -56,7 +56,9 @@ const userController = {
         .catch(err => {
             console.log(err);
             res.status(400).json(err)
+        }
     },
+
     // delete a current friend
     deleteFriend({params}, res) {
         User.findOneAndUpdate({_id: params.userId}, {$pull: {friends: {id: params.friends}}}, {new: true, runValidators: true})
@@ -72,7 +74,6 @@ const userController = {
             res.status(400).json(err);
         }
     }
-}
-}
+};
 
 module.exports = userController;
