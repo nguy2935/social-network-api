@@ -42,16 +42,35 @@ const userController = {
             console.log(err);
             res.status(400).json(err)
         });
-    }
+    },
     // update the current user by ID
-
-
-
-
-
-
-    
+    updateUser({params, body}, res) {
+        User.findOneAndUpdate({_id: params.id}, body, {new: true, runValidators: true})
+        .then(dbUserData => {
+            if(!dbUserData) {
+                res.status(404).json({message: "There is no User with this ID!"});
+                return;
+            }
+            res.json(dbUserData)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err)
+    },
     // delete a current friend
-}
+    deleteFriend({params}, res) {
+        User.findOneAndUpdate({_id: params.userId}, {$pull: {friends: {id: params.friends}}}, {new: true, runValidators: true})
+        .then(dbUserData => {
+            if(!dbUserData) {
+                res.status(404).json({message: "There is no User with this ID!"});
+                return;
+            }
+            res.json(dbUserData)
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        }
+};
 
 module.exports = userController;
