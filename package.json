@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/nguy2935/social-network-api#readme",
   "dependencies": {
-    "dependencies": "^0.0.1"
-  },
-  "devDependencies": {}
+    "dependencies": "^0.0.1",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.6"
+  }
 }
